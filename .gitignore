@@ -38,7 +38,6 @@ lerna-debug.log*
 
 config/config.ts
 ormconfig.json
-.env
+# .env
 README.md
-ormconfig.json
-ormconfig.json.rds
+# ormconfig.json
