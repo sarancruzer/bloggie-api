@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "msjsdiag.debugger-for-chrome",
+        "ashinzekene.nestjs",
+        "abhijoybasak.nestjs-files",
+        "chakrounanas.turbo-console-log",
+        "vscode-icons-team.vscode-icons",
+        "visualstudioexptteam.vscodeintellicode",
+        "christian-kohler.path-intellisense"
+    ]
+}
