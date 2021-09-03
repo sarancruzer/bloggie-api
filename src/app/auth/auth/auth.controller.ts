@@ -31,7 +31,7 @@ export class AuthController {
     async register(@Body() createUserDto: CreateUserDto): Promise<ResponseDto>{
 
       const res =  await this.iAuthService.register(createUserDto);
-      return this.commonService.customResponse(res, "Login successfully", HttpStatus.OK.toString());
+      return this.commonService.customResponse(res, "Register successfully", HttpStatus.OK.toString());
     }
 
     // User authentication    
