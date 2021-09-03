@@ -5,10 +5,11 @@ import { User } from './entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { USER_SERVICE } from './interface/user.interface';
 import { CommonService } from '../shared/services/common.service';
+import { Follow } from './entities/follow.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User, Follow])
   ],
   controllers: [UsersController],
   providers: [

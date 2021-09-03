@@ -7,7 +7,6 @@ import { CommonService } from "../shared/services/common.service";
 import { JwtCustomService } from "../shared/services/jwt-custom.service";
 import { MailService } from "../shared/services/mail/mail.service";
 import { SharedModule } from "../shared/shared.module";
-import { Patient } from "../users/entities/patient.entity";
 import { User } from "../users/entities/user.entity";
 import { UsersModule } from "../users/users.module";
 import { UsersService } from "../users/users.service";
@@ -19,6 +18,7 @@ import { AUTH_SERVICE } from "./interface/auth.interface";
 import * as winston from 'winston';
 import { WinstonModule } from "nest-winston";
 import { AuthorizationMiddleware } from "src/authorization.middleware";
+import { Follow } from "../users/entities/follow.entity";
 
 let configService = new ConfigService();
 
@@ -31,7 +31,7 @@ let configService = new ConfigService();
       secret: configService.get('JWT_SECRET'),
       signOptions: {expiresIn:  configService.get('JWT_EXPIRESIN')}
     }),
-    TypeOrmModule.forFeature([User, Patient]),
+    TypeOrmModule.forFeature([User, Follow]),
     SharedModule,
     WinstonModule.forRoot({
       // options

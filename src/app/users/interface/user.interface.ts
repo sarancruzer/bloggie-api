@@ -1,4 +1,4 @@
-import { CreateUserDto } from "../dto/create-user.dto";
+import { CreateUserDto, FollowDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
 import { Role, User } from "../entities/user.entity";
 
@@ -27,6 +27,8 @@ export interface IUserService {
     remove(id: number);
     
     userProfile(currentUser: IUser): Promise<IUser | undefined>;
+
+    userFollow(followDto: FollowDto, currentUser: User): Promise<void>;
 
 }
 

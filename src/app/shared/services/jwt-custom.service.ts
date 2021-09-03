@@ -46,10 +46,10 @@ export class JwtCustomService {
     return payload;
   }
 
-  async generateUserCode() {
+  async generateShortCode() {
     let randNumber = Math.round(Date.now() / 1000).toString();
     randNumber = randNumber.substr(randNumber.length - 5);
-    let randUniqid = uniqid().toUpperCase();
+    let randUniqid = uniqid();
     randUniqid = randUniqid.substr(randUniqid.length - 5);
     let userCode = randUniqid + randNumber;
     return userCode;

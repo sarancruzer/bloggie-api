@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Inject, HttpStatus, UseFilters, UsePipes, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, FollowDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { IUserService, USER_SERVICE } from './interface/user.interface';
 import { CommonService } from '../shared/services/common.service';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
@@ -52,4 +52,17 @@ export class UsersController {
     return await this.commonService.customResponse(res, 'appointment', HttpStatus.OK.toString());
 
   }
+
+  @UseGuards(AuthGuard('jwt'))
+  @UseFilters(new HttpExceptionFilter())
+  @UsePipes(new ValidationPipe())
+  @ApiBearerAuth('JWT-auth')
+  @Post('follow')
+  userFollow(@Body() followDto: FollowDto, @Req() req: any) {
+    this.usersService.userFollow(followDto, req.user.data);
+    return this.commonService.customResponse([], 'appointment', HttpStatus.OK.toString());
+  }
+
+
+
 }

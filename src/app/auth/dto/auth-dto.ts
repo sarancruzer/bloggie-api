@@ -2,7 +2,6 @@ import { IsEmail, isEmail, IsNotEmpty } from "class-validator";
 
 
 export class UserRegisterDto {
-
     
     @IsNotEmpty()
     firstName: string;
@@ -16,9 +15,6 @@ export class UserRegisterDto {
     password: string;
 
     mobileNumber: string;
-    
-    role: string;
-
 }
 
 export class CompanyRegisterDto {

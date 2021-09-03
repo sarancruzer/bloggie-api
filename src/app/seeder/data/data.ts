@@ -1,6 +1,5 @@
-import { ITherapist } from "src/app/therapist/interface/therapist.interface";
 
-export const therapists: ITherapist[] = [
+export const therapists: any[] = [
     { 
       firstName: 'saraseed1',
       email: 'saraseed1@yopmail.com',

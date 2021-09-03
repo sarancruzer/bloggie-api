@@ -28,7 +28,7 @@ async function bootstrap() {
 
 
    const swaggerCconfig = new DocumentBuilder()
-    .setTitle('Auticare Api')
+    .setTitle('Bloggie Api')
     .setVersion('1.0')
     .addBearerAuth(
       {

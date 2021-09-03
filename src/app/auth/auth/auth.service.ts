@@ -8,7 +8,6 @@ import { Role, User } from "src/app/users/entities/user.entity";
 import { UsersService } from "src/app/users/users.service";
 import { Repository } from "typeorm";
 import * as bcrypt from 'bcryptjs';
-import { Patient } from "src/app/users/entities/patient.entity";
 import { LoginUserDto, UserTokenDto } from "../dto/login-user.dto";
 import { plainToClass } from "class-transformer";
 import { MailService } from "src/app/shared/services/mail/mail.service";
@@ -32,8 +31,7 @@ export class AuthService implements IAuthService {
         private jwtService: JwtService,
         @InjectRepository(User)
         private readonly userRepository: Repository<User>,
-        @InjectRepository(Patient)
-        private readonly patientRepository: Repository<Patient>,  
+     
         private readonly usersService: UsersService,
         private readonly mailService: MailService,
         private readonly jwtCustomService: JwtCustomService,
@@ -63,50 +61,26 @@ export class AuthService implements IAuthService {
         
         const user = await this.userRepository.save(newUserValue); 
 
-        const newPatient = new Patient();
-        newPatient.patientName = createUserDto.patientName;
-        newPatient.dob = createUserDto.dob;
-        newPatient.relationType = createUserDto.relationType;
-        newPatient.user = user;
-
-        this.patientRepository.save(newPatient); 
-
         const token =  await this.generateAccessToken(user);
-
         this.mailService.userVerificationEmail(user, token);
 
-        return user;
-       
-
+        return user;     
     }   
 
 
     async authenticate(loginUserDto: LoginUserDto): Promise<UserTokenDto> {
-
-
-       
-
-                
         const errors = await validate(loginUserDto);  // Validate Fileds
         if (errors.length > 0) {
-
             throw new HttpException( errors , HttpStatus.BAD_REQUEST);
         }
         const { email } = loginUserDto;
         const user = await this.userRepository.findOne({ email });
         console.log("🚀 ~ file: auth.service.ts ~ line 89 ~ AuthService ~ authenticate ~ user", user)
         const error =  loginUserDto.email + ' User not found' ;
-        if (!user) throw new HttpException( error, HttpStatus.UNAUTHORIZED);        
-
+        if (!user) throw new HttpException( error, HttpStatus.UNAUTHORIZED);
 
         if (bcrypt.compareSync(loginUserDto.password, user.password)) {
             const userData = plainToClass(UserTokenDto, user);
-            console.log("🚀 ~ file: auth.service.ts ~ line 96 ~ AuthService ~ authenticate ~ userData", userData)
-
-            // const token =  await this.generateAccessToken(userData);
-            // console.log("🚀 ~ file: auth.service.ts ~ line 99 ~ AuthService ~ authenticate ~ token", token)
-            // this.mailService.userVerificationEmail(user, token);
-
             return userData;
         }
         const _errors = { email: 'Password is wrong!.' };
@@ -160,9 +134,7 @@ export class AuthService implements IAuthService {
       
         const token =  await this.generateAccessToken(user);
         this.mailService.forgotPasswordEmail(user, token);
-    } 
-
-    
+    }    
 
 
     async customResponse(data: object, message: string, status: string, roleModules?: any): Promise<ResponseDto> {
